@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
   private float currentDegree = 0f;
   
   // device sensor manager
-  private SensorManager mSensorManager;
+  SensorManager mSensorManager;
   	 
   TextView tvHeading;
   
@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
     tvHeading = (TextView) findViewById(R.id.textView1);
     	 
 	// initialize your android device sensor capabilities
-	mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+    mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
     
 
     // Get the location manager
