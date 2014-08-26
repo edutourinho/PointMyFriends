@@ -34,6 +34,8 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
   	 
   TextView tvHeading;
   
+  TextView locationProvider;
+  
   
 /** Called when the activity is first created. */
 
@@ -58,24 +60,20 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
     // default
     Criteria criteria = new Criteria();
     provider = locationManager.getBestProvider(criteria, false);
-    Location location = locationManager.getLastKnownLocation(provider);
+    Location local = locationManager.getLastKnownLocation(provider);
+    locationManager.requestLocationUpdates(provider, 400, 1, this);
 
     // Initialize the location fields
-    if (location != null) {
+    if (local != null) {
       System.out.println("Provider " + provider + " has been selected.");
-      onLocationChanged(location);
+      onLocationChanged(local);
     } else {
       latituteField.setText("Location not available");
       longitudeField.setText("Location not available");
     }
   }
 
-  /* Request updates at startup */
-  @Override
-  protected void onResume() {
-    super.onResume();
-    locationManager.requestLocationUpdates(provider, 400, 1, this);
-  }
+  
 
   /* Remove the locationlistener updates when Activity is paused */
   @Override
