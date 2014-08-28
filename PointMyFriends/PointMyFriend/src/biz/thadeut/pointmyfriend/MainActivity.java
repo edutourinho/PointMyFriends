@@ -61,7 +61,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
     Criteria criteria = new Criteria();
     provider = locationManager.getBestProvider(criteria, false);
     Location local = locationManager.getLastKnownLocation(provider);
-    locationManager.requestLocationUpdates(provider, 400, 1, this);
+    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
 
     // Initialize the location fields
     if (local != null) {
@@ -74,12 +74,21 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
   }
 
   
-
+  @Override
+  protected void onResume() {
+      super.onResume();
+       
+      // for the system's orientation sensor registered listeners
+      mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+              SensorManager.SENSOR_DELAY_GAME);
+  }
+  
   /* Remove the locationlistener updates when Activity is paused */
   @Override
   protected void onPause() {
     super.onPause();
     locationManager.removeUpdates(this);
+    mSensorManager.unregisterListener(this);
     }
 
   @Override
